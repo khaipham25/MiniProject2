@@ -60,6 +60,12 @@ public interface ShoppingDao {
     @Insert
     void insertOrderDetail(OrderDetail orderDetail);
 
+    @Update
+    void updateOrderDetail(OrderDetail orderDetail);
+
     @Query("SELECT * FROM order_details WHERE orderId = :orderId")
     List<OrderDetail> getOrderDetailsByOrder(int orderId);
+
+    @Query("SELECT * FROM order_details WHERE orderId = :orderId AND productId = :productId LIMIT 1")
+    OrderDetail getDetailByProductAndOrder(int orderId, int productId);
 }

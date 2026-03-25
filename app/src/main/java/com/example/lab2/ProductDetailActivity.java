@@ -64,15 +64,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         int userId = pref.getInt("userId", -1);
 
         if (userId == -1) {
-            // Luồng: Chưa đăng nhập -> Chuyển sang Login
             Toast.makeText(this, "Vui lòng đăng nhập để nhặt hàng", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            // Gửi ID sản phẩm để sau khi login có thể quay lại đúng chỗ (tùy chọn)
-            startActivity(intent);
+            startActivity(new Intent(this, LoginActivity.class));
             return;
         }
 
-        // Luồng: Đã đăng nhập -> Tạo Order và OrderDetail
         addToCart(userId);
     }
 
@@ -84,42 +80,49 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
         int qty = Integer.parseInt(qtyStr);
 
-        // 1. Tạo Order (nếu chưa có)
+        // 1. Kiểm tra và Tạo hóa đơn (Order) nếu chưa có
         Order order = db.shoppingDao().getPendingOrderByUser(userId);
         if (order == null) {
             order = new Order();
             order.userId = userId;
             order.status = "Pending";
             order.orderDate = new Date().toString();
-            order.orderId = (int) db.shoppingDao().insertOrder(order);
+            // Lưu Order vào CSDL và lấy lại ID mới tạo
+            long newOrderId = db.shoppingDao().insertOrder(order);
+            order.orderId = (int) newOrderId;
         }
 
-        // 2. Tạo OrderDetails
-        OrderDetail detail = new OrderDetail();
-        detail.orderId = order.orderId;
-        detail.productId = productId;
-        detail.quantity = qty;
-        detail.unitPrice = product.price;
-        db.shoppingDao().insertOrderDetail(detail);
+        // 2. Tạo hoặc cập nhật Chi tiết hóa đơn (OrderDetail)
+        OrderDetail existingDetail = db.shoppingDao().getDetailByProductAndOrder(order.orderId, productId);
+        
+        if (existingDetail != null) {
+            // Nếu đã có sản phẩm này trong giỏ, chỉ cần cộng dồn số lượng
+            existingDetail.quantity += qty;
+            db.shoppingDao().updateOrderDetail(existingDetail);
+        } else {
+            // Nếu chưa có, tạo mới Chi tiết hóa đơn
+            OrderDetail detail = new OrderDetail();
+            detail.orderId = order.orderId;
+            detail.productId = productId;
+            detail.quantity = qty;
+            detail.unitPrice = product.price;
+            db.shoppingDao().insertOrderDetail(detail);
+        }
 
         Toast.makeText(this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-
-        // 3. Luồng: Có tiếp tục chọn sản phẩm?
         showContinueShoppingDialog();
     }
 
     private void showContinueShoppingDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Tiếp tục mua sắm?")
-                .setMessage("Bạn có muốn tiếp tục chọn sản phẩm khác hay đi đến trang thanh toán?")
-                .setPositiveButton("Tiếp tục chọn", (dialog, which) -> {
-                    // Quay lại danh sách Products
+                .setMessage("Bạn có muốn tiếp tục chọn thêm hay đi thanh toán?")
+                .setPositiveButton("Tiếp tục", (dialog, which) -> {
                     Intent intent = new Intent(this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 })
                 .setNegativeButton("Thanh toán", (dialog, which) -> {
-                    // Chuyển sang Checkout
                     startActivity(new Intent(this, CheckoutActivity.class));
                 })
                 .show();
