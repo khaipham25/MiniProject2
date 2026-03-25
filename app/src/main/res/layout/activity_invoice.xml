@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="HÓA ĐƠN THANH TOÁN"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/tvInvoiceUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Khách hàng: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvInvoiceId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mã hóa đơn: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvInvoiceDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ngày đặt: "
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvInvoiceItems"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tvInvoiceTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tổng cộng: $0.00"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="end"/>
+
+    <Button
+        android:id="@+id/btnInvoiceHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quay về trang chủ"
+        android:layout_marginTop="24dp"/>
+
+</LinearLayout>

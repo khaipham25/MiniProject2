@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tvDetailName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên sản phẩm"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/textPrimary" />
+
+        <TextView
+            android:id="@+id/tvDetailPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$0.00"
+            android:textSize="22sp"
+            android:textColor="@color/primaryColor"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD"
+            android:layout_marginVertical="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số lượng muốn mua"
+            android:textSize="16sp"
+            android:textColor="@color/textSecondary"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/etQuantity"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:hint="Qty"
+            android:inputType="number"
+            android:text="1"
+            android:padding="12dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="THÊM VÀO GIỎ HÀNG"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/primaryColor"
+            app:cornerRadius="12dp"/>
+
+        <Button
+            android:id="@+id/btnBackDetail"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="QUAY LẠI"
+            android:layout_marginTop="12dp"
+            app:cornerRadius="12dp"
+            android:textColor="@color/primaryColor"/>
+
+    </LinearLayout>
+</ScrollView>
