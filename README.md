@@ -1,1 +1,1 @@
-Ứng dụng quản lý bán hàng 
+Ứng dụng quản lý bán hàng.
